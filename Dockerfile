@@ -1,21 +1,22 @@
-
 # Usamos la imagen oficial de Node.js 18
 FROM node:18
 
-# Establecemos el directorio de trabajo dentro del contenedor
+# Establecemos el directorio de trabajo
 WORKDIR /app
 
-# Copiamos package.json y package-lock.json para instalar dependencias
+# Copiamos dependencias y las instalamos
 COPY package*.json ./
-
-# Instalamos las dependencias
 RUN npm install
 
 # Copiamos el resto del código
 COPY . .
 
-# Exponemos el puerto 3000 (donde corre Next.js)
+# Le damos permisos al pipeline
+RUN chmod +x pipeline.sh
+
+# Exponemos puerto
 EXPOSE 3000
 
-# Comando para iniciar el servidor en modo desarrollo con Turbopack
+# Comando por defecto
 CMD ["npm", "run", "dev"]
+    
